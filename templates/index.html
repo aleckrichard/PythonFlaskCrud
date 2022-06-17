@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}    
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<form action="/addContact" method="post" class="row g-3">
+    <div class="col-auto">
+    <input type="text" name="fullname" class="form-control" placeholder="Full Name">
+</div>
+<div class="col-auto">
+    <input type="text" name="phone" class="form-control" placeholder="Phone">
+</div>
+<div class="col-auto">
+    <input type="text" name="email" class="form-control" placeholder="Email">
+</div>
+<div class="col-auto">
+    <button type="submit" class="btn btn-danger">Save</button>
+</div>
+</form>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Fullname</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in contacts%}
+        <tr><td>{{contact.1}}</td>
+            <td>{{contact.2}}</td>
+            <td>{{contact.3}}</td>
+            <td>
+                <a href="/view/{{contact.0}}" class="btn btn-primary">View</a>
+                <a href="/edit/{{contact.0}}" class="btn btn-warning">Edit</a>
+                <a href="/delete/{{contact.0}}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
